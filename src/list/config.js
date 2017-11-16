@@ -41,3 +41,14 @@ fcViews.listYear = {
 		listDayAltFormat: 'dddd' // day-of-week is nice-to-have
 	}
 };
+
+fcViews.mySchedule = {
+	'class': MyScheduleView,
+	buttonTextKey: 'list', // what to lookup in locale files
+	duration: { weeks: 1 },
+	defaults: {
+		buttonText: 'list', // text to display for English
+		listDayFormat: 'ddd D MMM', // like "Mon 13 Nov"
+		noEventsMessage: 'No events to display'
+	}
+};

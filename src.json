@@ -41,6 +41,7 @@
     "agenda/AgendaView.js",
     "agenda/config.js",
     "list/ListView.js",
+    "list/MyScehduleView.js",
     "list/config.js",
     "outro.js"
   ],
