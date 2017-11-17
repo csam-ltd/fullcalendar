@@ -237,8 +237,6 @@ var MyScheduleViewGrid = Grid.extend({
 			var event = seg.event;
 			var url = event.url;
 			var timeHtml;
-
-			console.log(event);
 	
 			return '<div class="details__container">' + 
 							'<div class="hours-per-day">' + (event.hoursPerDay ? event.hoursPerDay + "h" : "") + '</div>' +
