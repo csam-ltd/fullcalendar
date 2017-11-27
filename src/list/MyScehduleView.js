@@ -147,13 +147,9 @@ var MyScheduleViewGrid = Grid.extend({
 		},
 	
 		renderEmptyMessage: function() {
-			this.el.html(
-				'<div class="fc-list-empty-wrap2">' + // TODO: try less wraps
-				'<div class="fc-list-empty-wrap1">' +
+			this.el.empty().append(
 				'<div class="fc-list-empty">' +
 					htmlEscape(this.view.opt('noEventsMessage')) +
-				'</div>' +
-				'</div>' +
 				'</div>'
 			);
 		},
