@@ -288,6 +288,7 @@ function Calendar_constructor(element, overrides) {
 	t.getView = getView;
 	t.option = option; // getter/setter method
 	t.publiclyTrigger = publiclyTrigger;
+	t.registerCustomMethod = registerCustomMethod;
 
 
 	// Options
@@ -653,29 +654,21 @@ function Calendar_constructor(element, overrides) {
 			date = currentView.massageCurrentDate(date);
 
 			// render or rerender the view
-			if (
-				!currentView.isDateSet ||
-				!( // NOT within interval range signals an implicit date window change
-					date >= currentView.intervalStart &&
-					date < currentView.intervalEnd
-				)
-			) {
-				if (elementVisible()) {
+			if (elementVisible()) {
 
-					if (forcedScroll) {
-						currentView.captureInitialScroll(forcedScroll);
-					}
-
-					currentView.setDate(date, forcedScroll);
-
-					if (forcedScroll) {
-						currentView.releaseScroll();
-					}
-
-					// need to do this after View::render, so dates are calculated
-					// NOTE: view updates title text proactively
-					updateToolbarsTodayButton();
+				if (forcedScroll) {
+					currentView.captureInitialScroll(forcedScroll);
 				}
+
+				currentView.setDate(date, forcedScroll);
+
+				if (forcedScroll) {
+					currentView.releaseScroll();
+				}
+
+				// need to do this after View::render, so dates are calculated
+				// NOTE: view updates title text proactively
+				updateToolbarsTodayButton();
 			}
 		}
 
@@ -1000,7 +993,13 @@ function Calendar_constructor(element, overrides) {
 
 	/* Misc
 	-----------------------------------------------------------------------------*/
-
+	/**
+ 	 * Registers a custom method with the full calendar
+ 	 */
+	function registerCustomMethod(name, callback) {
+		//Register the new callback with the full calendar
+		t[name] = callback;
+	}
 
 	function getCalendar() {
 		return t;
@@ -1081,6 +1080,17 @@ function Calendar_constructor(element, overrides) {
 
 
 	function publiclyTrigger(name, thisObj) {
+
+		if (name === "eventAfterAllRender") {
+
+			thisObj.hourlyAvailabilityData = {
+				eventName: name,
+				option: currentOption,
+				segs: segCache
+			};
+
+		}
+
 		var args = Array.prototype.slice.call(arguments, 2);
 
 		thisObj = thisObj || _element;

@@ -193,6 +193,9 @@ function EventManager() { // assumed to be a calendar
 				source._status = 'resolved';
 
 				if (eventInputs) {
+					// If it exists then call the custom function
+					if (t.updateEventCache) cache = t.updateEventCache(cache, eventInputs);
+
 					for (i = 0; i < eventInputs.length; i++) {
 						eventInput = eventInputs[i];
 
@@ -859,7 +862,7 @@ function EventManager() { // assumed to be a calendar
 			}
 		}
 		else {
-			if (!eventProps.start.hasTime()) {
+			if (eventProps.start && !eventProps.start.hasTime()) {
 				eventProps.start = t.applyTimezone(eventProps.start.time(0)); // will assign a 00:00 time
 			}
 			if (eventProps.end && !eventProps.end.hasTime()) {

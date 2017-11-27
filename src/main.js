@@ -4,11 +4,16 @@ var FC = $.fullCalendar = {
 	internalApiVersion: 7
 };
 var fcViews = FC.views = {};
+var currentOption = undefined;
 
 
 $.fn.fullCalendar = function(options) {
 	var args = Array.prototype.slice.call(arguments, 1); // for a possible method call
 	var res = this; // what this function will return (this jQuery object by default)
+
+	//Get full calendar to report the event that it is on
+	currentOption = options;
+	segCache = [];
 
 	this.each(function(i, _element) { // loop each DOM element involved
 		var element = $(_element);

@@ -92,6 +92,8 @@ Grid.mixin({
 
 		if (segs.length) { // don't build an empty html string
 
+			segCache = segs;
+
 			// build a large concatenation of event segment HTML
 			for (i = 0; i < segs.length; i++) {
 				html += this.fgSegHtml(segs[i], disableResizing);
@@ -101,7 +103,11 @@ Grid.mixin({
 			// Then, compute the 'el' for each segment. An el might be null if the eventRender callback returned false.
 			$(html).each(function(i, node) {
 				var seg = segs[i];
-				var el = view.resolveEventEl(seg.event, $(node));
+
+				var el;
+				if (seg && seg.event) {
+					el = view.resolveEventEl(seg.event, $(node));
+				}
 
 				if (el) {
 					el.data('fc-seg', seg); // used by handlers
