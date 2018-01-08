@@ -182,6 +182,10 @@ export default class EventRenderer {
 
 		if (segs.length) { // don't build an empty html string
 
+			//Segment insert
+			var updateSegFn = this.opt('updateSegmentCache');
+			if (updateSegFn) updateSegFn(segs);
+
 			// build a large concatenation of event segment HTML
 			for (i = 0; i < segs.length; i++) {
 				this.beforeFgSegHtml(segs[i]);
