@@ -182,8 +182,8 @@ export default class EventRenderer {
 
 		if (segs.length) { // don't build an empty html string
 
-			//Segment insert
-			var updateSegFn = this.opt('updateSegmentCache');
+			this.updateHourlyAvailabilityLayerCache(this, segs);
+
 			if (updateSegFn) updateSegFn(segs);
 
 			// build a large concatenation of event segment HTML
@@ -213,6 +213,35 @@ export default class EventRenderer {
 		return renderedSegs;
 	}
 
+	/*
+    * Updates the hourly availability layer cache with fresh data when the calendar is going to render something new
+    */
+	updateHourlyAvailabilityLayerCache(context,segments){
+
+		//Get event status from full calendar
+		var isResizing = context.view.eventResizing.isResizing,
+		isDragging = context.view.eventDragging.isDragging,
+		calendarStatus = 0;
+	
+		//Set the calendar status
+		if (isResizing) calendarStatus = 1;
+		if (isDragging) calendarStatus = 2;
+
+		//Build the obj to be used in hourly availability layer
+		var segmentCacheObj = {
+			rawSegments : segments,
+			status : calendarStatus,
+			//Current resource being worked on
+			resource : context.designatedResource.id,
+			//This will return all the resources that have event data in them
+			activeResources : Object.keys(context.view._watchers.resourcesServiced)
+		};
+
+		//Update the segment cache within hourlyavailability layer
+		var updateSegFn = this.opt('updateSegmentCache');
+		if (updateSegFn) updateSegFn(segmentCacheObj);
+
+	}
 
 	beforeFgSegHtml(seg) { // hack
 	}
