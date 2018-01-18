@@ -184,8 +184,6 @@ export default class EventRenderer {
 
 			this.updateHourlyAvailabilityLayerCache(this, segs);
 
-			if (updateSegFn) updateSegFn(segs);
-
 			// build a large concatenation of event segment HTML
 			for (i = 0; i < segs.length; i++) {
 				this.beforeFgSegHtml(segs[i]);
