@@ -1,5 +1,6 @@
 import { defineView } from '../ViewRegistry'
 import ListView from './ListView'
+import MyScheduleView from './MyScheduleView'
 
 defineView('list', {
   'class': ListView,
@@ -41,5 +42,15 @@ defineView('listYear', {
   duration: { year: 1 },
   defaults: {
     listDayAltFormat: 'dddd' // day-of-week is nice-to-have
+  }
+})
+
+// [CSAM] Custom view; not part of FC
+defineView('mySchedule', {
+  'class': MyScheduleView,
+  type: 'list',
+  duration: { weeks: 1 },
+  defaults: {
+    listDayFormat: 'ddd D MMM' // like "Mon 13 Nov"
   }
 })
